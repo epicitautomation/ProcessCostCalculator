@@ -18,7 +18,7 @@ const LeadForm: React.FC = () => {
     setStatus('Sending...');
 
     try {
-      await axios.post('https://austins.app.n8n.cloud/webhook-test/lead-capture', formData);
+      await axios.post('https://austins.app.n8n.cloud/webhook/lead-capture', formData);
       setStatus('Success! We’ll be in touch.');
       setFormData({ name: '', email: '' });
     } catch (err) {
