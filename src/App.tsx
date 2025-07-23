@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './index.css';
+import LeadForm from './LeadForm';
 
  type TimeUnit = 'Seconds' | 'Minutes' | 'Hours';
  type FrequencyUnit = 'Work Day' | 'Day' | 'Work Week' | 'Week' | 'Month' | 'Quarter' | 'Year';
@@ -43,7 +44,7 @@ export default function App() {
 
         {/* Time Unit Selection */}
         <div className="mb-4">
-          <label className="block font-medium mb-1">My process is measured in:</label>
+          <label className="block font-medium mb-1">My process is measured in:  </label>
           <select
             className="w-full p-2 border rounded"
             value={timeUnit}
@@ -57,7 +58,7 @@ export default function App() {
 
         {/* Frequency Unit Selection */}
         <div className="mb-4">
-          <label className="block font-medium mb-1">Per:</label>
+          <label className="block font-medium mb-1">Per:  </label>
           <select
             className="w-full p-2 border rounded"
             value={freqUnit}
@@ -72,7 +73,7 @@ export default function App() {
         {/* Process Time Slider */}
         <div className="mb-4">
           <label className="block font-medium mb-1">
-            Process time in {timeUnit.toLowerCase()}: {processTime}
+            Process time in {timeUnit.toLowerCase()}: {processTime}  
           </label>
           <input
             type="range"
@@ -102,7 +103,7 @@ export default function App() {
         {/* Wage Input */}
         <div className="mb-6">
           <label className="block font-medium mb-1">
-            Employee wage per hour ($):
+            Employee wage per hour ($):  
           </label>
           <input
             type="number"
@@ -118,6 +119,7 @@ export default function App() {
           Estimated Annual Process Cost: <span className="text-blue-600">${annualCost.toFixed(2)}</span>
         </div>
       </div>
+      <LeadForm />
     </div>
   );
 }
