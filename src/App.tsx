@@ -116,7 +116,9 @@ export default function ProcessCostCalculator() {
 
       <div className="result-inline">
         <label>Estimated Cost:  </label>
-        {totalCost !== null && <span className="cost">$ {totalCost.toFixed(2)}</span>}
+        <span className="cost">
+    $ {totalCost !== null ? totalCost.toFixed(2) : '0.00'}
+  </span>
       </div>
 
       <button onClick={handleCalculate}>Calculate</button>
