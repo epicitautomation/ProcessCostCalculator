@@ -1,125 +1,144 @@
 import { useState } from 'react';
-import './index.css';
-import LeadForm from './LeadForm';
+import './calculator.css';
 
- type TimeUnit = 'Seconds' | 'Minutes' | 'Hours';
- type FrequencyUnit = 'Work Day' | 'Day' | 'Work Week' | 'Week' | 'Month' | 'Quarter' | 'Year';
+const TIME_UNITS = ['seconds', 'minutes', 'hours'] as const;
+type TimeUnit = typeof TIME_UNITS[number];
 
-const timeUnits: TimeUnit[] = ['Seconds', 'Minutes', 'Hours'];
-const frequencyUnits: FrequencyUnit[] = ['Work Day', 'Day', 'Work Week', 'Week', 'Month', 'Quarter', 'Year'];
+const PERIODS = [
+  'work day', 'day', 'work week', 'week', 'month', 'quarter', 'year'
+] as const;
+type Period = typeof PERIODS[number];
 
-const timeUnitToHours = {
-  Seconds: 1 / 3600,
-  Minutes: 1 / 60,
-  Hours: 1,
-};
+export default function ProcessCostCalculator() {
+  const [timeUnit, setTimeUnit] = useState<TimeUnit>('seconds');
+  const [period, setPeriod] = useState<Period>('day');
+  const [processTime, setProcessTime] = useState(30);
+  const [processCount, setProcessCount] = useState(10);
+  const [wage, setWage] = useState(20);
+  const [totalCost, setTotalCost] = useState<number | null>(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-const frequencyUnitToMultiplier = {
-  'Work Day': 260,
-  'Day': 365,
-  'Work Week': 52,
-  'Week': 52,
-  'Month': 12,
-  'Quarter': 4,
-  'Year': 1,
-};
+  const handleCalculate = () => {
+    const unitInSeconds: number | undefined = {
+      seconds: 1,
+      minutes: 60,
+      hours: 3600,
+    }[timeUnit];
 
-export default function App() {
-  const [timeUnit, setTimeUnit] = useState<TimeUnit>('Minutes');
-  const [freqUnit, setFreqUnit] = useState<FrequencyUnit>('Work Day');
-  const [processTime, setProcessTime] = useState(10);
-  const [processCount, setProcessCount] = useState(5);
-  const [wage, setWage] = useState(25);
+    const periodInDays: number | undefined = {
+      'work day': 1,
+      day: 1,
+      'work week': 5,
+      week: 7,
+      month: 30,
+      quarter: 90,
+      year: 365,
+    }[period];
 
-  const processTimeInHours = processTime * timeUnitToHours[timeUnit];
-  const totalProcessesPerYear = processCount * frequencyUnitToMultiplier[freqUnit];
-  const annualCost = processTimeInHours * totalProcessesPerYear * wage;
+    const secondsPerPeriod = processTime * processCount * unitInSeconds * periodInDays;
+    const hours = secondsPerPeriod / 3600;
+    const cost = hours * wage;
+    setTotalCost(cost);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await fetch('https://austins.app.n8n.cloud/webhook-test/lead-capture', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email })
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-      <div className="bg-white shadow-md rounded-xl p-6 w-full max-w-2xl">
-        <h1 className="text-2xl font-bold mb-4 text-center">
-          Process Cost Calculator
-        </h1>
+    <div className="calculator">
+      <h2>Process Cost Calculator</h2>
 
-        {/* Time Unit Selection */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">My process is measured in:  </label>
-          <select
-            className="w-full p-2 border rounded"
-            value={timeUnit}
-            onChange={e => setTimeUnit(e.target.value as TimeUnit)}
-          >
-            {timeUnits.map(unit => (
-              <option key={unit}>{unit}</option>
-            ))}
-          </select>
-        </div>
+      <div className="form-group">
+        <label>My process is measured in:</label>
+        <select value={timeUnit} onChange={(e) => setTimeUnit(e.target.value as TimeUnit)}>
+          <option value="seconds">Seconds</option>
+          <option value="minutes">Minutes</option>
+          <option value="hours">Hours</option>
+        </select>
+      </div>
 
-        {/* Frequency Unit Selection */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Per:  </label>
-          <select
-            className="w-full p-2 border rounded"
-            value={freqUnit}
-            onChange={e => setFreqUnit(e.target.value as FrequencyUnit)}
-          >
-            {frequencyUnits.map(unit => (
-              <option key={unit}>{unit}</option>
-            ))}
-          </select>
-        </div>
+      <div className="form-group">
+        <label>Per:</label>
+        <select value={period} onChange={(e) => setPeriod(e.target.value as Period)}>
+          <option value="work day">Work Day</option>
+          <option value="day">Day</option>
+          <option value="work week">Work Week</option>
+          <option value="week">Week</option>
+          <option value="month">Month</option>
+          <option value="quarter">Quarter</option>
+          <option value="year">Year</option>
+        </select>
+      </div>
 
-        {/* Process Time Slider */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Process time in {timeUnit.toLowerCase()}: {processTime}  
-          </label>
+      <div className="form-group slider-group">
+        <label>Process Time</label>
+        <div className="slider-wrapper">
           <input
             type="range"
             min="0"
             max="100"
             value={processTime}
-            onChange={e => setProcessTime(Number(e.target.value))}
-            className="w-full"
+            onChange={(e) => setProcessTime(Number(e.target.value))}
           />
+          <span>{processTime}</span>
         </div>
+      </div>
 
-        {/* Process Count Slider */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Process count per {freqUnit.toLowerCase()}: {processCount}
-          </label>
+      <div className="form-group slider-group">
+        <label>Process Count per {period}</label>
+        <div className="slider-wrapper">
           <input
             type="range"
             min="0"
             max="100"
             value={processCount}
-            onChange={e => setProcessCount(Number(e.target.value))}
-            className="w-full"
+            onChange={(e) => setProcessCount(Number(e.target.value))}
           />
-        </div>
-
-        {/* Wage Input */}
-        <div className="mb-6">
-          <label className="block font-medium mb-1">
-            Employee wage per hour ($):  
-          </label>
-          <input
-            type="number"
-            className="w-full p-2 border rounded"
-            value={wage}
-            onChange={e => setWage(Number(e.target.value))}
-            min={0}
-          />
-        </div>
-
-        {/* Results */}
-        <div className="text-xl font-semibold text-center">
-          Estimated Annual Process Cost: <span className="text-blue-600">${annualCost.toFixed(2)}</span>
+          <span>{processCount}</span>
         </div>
       </div>
-      <LeadForm />
+
+      <div className="form-group">
+        <label>Employee Wage per hour:</label>
+        <input
+          type="number"
+          value={wage}
+          onChange={(e) => setWage(Number(e.target.value))}
+        />
+      </div>
+
+      <div className="result-inline">
+        <label>Estimated Cost:  </label>
+        {totalCost !== null && <span className="cost">$ {totalCost.toFixed(2)}</span>}
+      </div>
+
+      <button onClick={handleCalculate}>Calculate</button>
+
+      <hr className="divider" />
+
+      <div className="lead-form">
+        <h3>Get in Touch!</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Name:</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+          </div>
+
+          <div className="form-group">
+            <label>Email:</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }

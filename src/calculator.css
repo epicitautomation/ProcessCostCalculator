@@ -4,8 +4,12 @@ body {
   background-color: white;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 .calculator {
-  background-color: #ec0606;
+  background-color: #0d2a3b;
   width: 100%;
   max-width: 400px;
   margin: 2rem auto;
@@ -42,11 +46,13 @@ input[type="email"] {
   border-radius: 6px;
   font-size: 1rem;
   background-color: #fff;
+  line-height: 1.2;
+  height: 40px;
 }
 
 input[type="range"] {
   width: 100%;
-  accent-color: #000000;
+  accent-color: #f26d24;
 }
 
 .slider-wrapper {
@@ -81,8 +87,8 @@ button {
   width: 100%;
   padding: 0.6rem;
   font-size: 1rem;
-  color: rgb(0, 0, 0);
-  background-color: #000000;
+  color: white;
+  background-color: #f26d24;
   border: none;
   border-radius: 6px;
   cursor: pointer;
