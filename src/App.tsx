@@ -124,7 +124,7 @@ export default function ProcessCostCalculator() {
       <hr className="divider" />
 
       <div className="lead-form">
-        <h3>Get in Touch!</h3>
+        <h2>Get in Touch!</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Name:</label>
