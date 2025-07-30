@@ -165,7 +165,7 @@ export default function ProcessCostCalculator() {
           <div className="lead-form">
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Enter your email to see results:</label>
+                <label>Enter your name and email to see your results!</label>
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
               </div>
