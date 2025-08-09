@@ -49,10 +49,66 @@ input[type="email"] {
   height: 40px;
 }
 
+/* RANGE SLIDER */
+
+/* Remove default styling */
 input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
-  accent-color: #f26d24;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #f26d24 var(--percent, 50%), white var(--percent, 50%));
+  outline: none;
+  cursor: pointer;
 }
+
+/* Chrome, Edge, Safari - Thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f26d24;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 2px rgba(0,0,0,0.4);
+}
+
+/* Firefox - Thumb */
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f26d24;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 2px rgba(0,0,0,0.4);
+}
+
+/* Firefox - Track */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: white;
+}
+
+/* Firefox - Progress (left of thumb) */
+input[type="range"]::-moz-range-progress {
+  background-color: #f26d24;
+  height: 6px;
+  border-radius: 3px;
+}
+
+
+
+
+
+
+
+
+
 
 .slider-wrapper {
   display: flex;

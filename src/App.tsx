@@ -70,7 +70,7 @@ export default function ProcessCostCalculator() {
       <h2>Process Cost Calculator</h2>
 
       <div className="form-group">
-        <label>My process is measured in:</label>
+        <label>My process is measured in</label>
         <select value={timeUnit} onChange={(e) => setTimeUnit(e.target.value as TimeUnit)}>
           <option value="seconds">Seconds</option>
           <option value="minutes">Minutes</option>
@@ -79,7 +79,7 @@ export default function ProcessCostCalculator() {
       </div>
 
       <div className="form-group">
-        <label>Per:</label>
+        <label>Per</label>
         <select value={period} onChange={(e) => setPeriod(e.target.value as Period)}>
           <option value="work day">Work Day</option>
           <option value="day">Day</option>
@@ -92,13 +92,14 @@ export default function ProcessCostCalculator() {
       </div>
 
       <div className="form-group slider-group">
-        <label>Process Time</label>
+        <label>Process time</label>
         <div className="slider-wrapper">
           <input
             type="range"
             min="0"
             max="100"
             value={processTime}
+            style={{ '--percent': `${processTime}%` } as React.CSSProperties}
             onChange={(e) => setProcessTime(Number(e.target.value))}
           />
           <span>{processTime}</span>
@@ -106,13 +107,14 @@ export default function ProcessCostCalculator() {
       </div>
 
       <div className="form-group slider-group">
-        <label>Process Count per {period}</label>
+        <label>Process count per {period}</label>
         <div className="slider-wrapper">
           <input
             type="range"
             min="0"
             max="100"
             value={processCount}
+            style={{ '--percent': `${processCount}%` } as React.CSSProperties}
             onChange={(e) => setProcessCount(Number(e.target.value))}
           />
           <span>{processCount}</span>
@@ -120,7 +122,7 @@ export default function ProcessCostCalculator() {
       </div>
 
       <div className="form-group">
-        <label>Employee Wage per hour:</label>
+        <label>Employee Wage per hour</label>
         <input
           type="number"
           value={wage}
@@ -165,7 +167,7 @@ export default function ProcessCostCalculator() {
           <div className="lead-form">
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Enter your name and email to see your results!</label>
+                <label>Enter your Name and Email to see your results!</label>
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
               </div>
