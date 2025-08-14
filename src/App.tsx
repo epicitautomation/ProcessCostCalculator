@@ -55,7 +55,7 @@ export default function ProcessCostCalculator() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch('https://austins.app.n8n.cloud/webhook/lead-capture', {
+    await fetch('https://hooks.zapier.com/hooks/catch/23899757/uu7rwen/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email })
