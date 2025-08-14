@@ -58,7 +58,10 @@ export default function ProcessCostCalculator() {
     await fetch('https://hooks.zapier.com/hooks/catch/23899757/uu7rwen/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email })
+      body: JSON.stringify({ 
+        name, 
+        email,
+        source: mode })
     });
     setSubmitted(true);
   };
