@@ -66,7 +66,7 @@ export default function ProcessCostCalculator() {
       body: JSON.stringify({ 
         name, 
         email,
-        source: mode })
+        source: SOURCE_LABELS[mode] })
     });
     setSubmitted(true);
   };
