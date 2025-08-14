@@ -53,6 +53,11 @@ export default function ProcessCostCalculator() {
     }
   }, [timeUnit, period, processTime, processCount, wage, mode, submitted]);
 
+  const SOURCE_LABELS: Record<'public' | 'ghl', string> = {
+    public: 'Website cost calculator',
+    ghl: 'GHL Funnel'
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await fetch('/api/send-lead', {

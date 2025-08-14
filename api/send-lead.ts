@@ -13,7 +13,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // Call Zapier webhook (URL stored in env var on Vercel)
+    // Call Zapier webhook (URL stored in Vercel)
     const zapierResponse = await fetch(process.env.ZAPIER_WEBHOOK_URL as string, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
