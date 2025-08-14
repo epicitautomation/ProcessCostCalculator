@@ -55,7 +55,7 @@ export default function ProcessCostCalculator() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch('https://hooks.zapier.com/hooks/catch/23899757/uu7rwen/', {
+    await fetch('/api/send-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
